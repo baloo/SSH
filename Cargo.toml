@@ -1,0 +1,11 @@
+[workspace]
+resolver = "2"
+members = [
+    "ssh-agent-lib",
+    "ssh-cipher",
+    "ssh-encoding",
+    "ssh-key"
+]
+
+[profile.dev]
+opt-level = 2
