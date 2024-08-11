@@ -33,6 +33,7 @@ pub use key::{
 
 use encoding::Error as EncodingError;
 
+pub mod constants;
 mod cookie;
 
 pub use cookie::Cookie;
