@@ -33,6 +33,10 @@ pub use key::{
 
 use encoding::Error as EncodingError;
 
+mod cookie;
+
+pub use cookie::Cookie;
+
 /// Error emitted by the ssh protocol
 #[derive(Debug)]
 pub enum Error {

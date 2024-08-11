@@ -848,6 +848,7 @@ dependencies = [
 name = "ssh-protocol"
 version = "0.1.0-pre.0"
 dependencies = [
+ "rand_core",
  "ssh-cipher",
  "ssh-encoding",
  "ssh-key",
