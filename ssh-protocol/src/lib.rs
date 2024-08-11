@@ -21,6 +21,8 @@
     unused_qualifications
 )]
 
+#[cfg(feature = "alloc")]
+extern crate alloc;
 #[cfg(feature = "std")]
 extern crate std;
 
@@ -35,8 +37,9 @@ use encoding::Error as EncodingError;
 
 pub mod constants;
 mod cookie;
+mod name_list;
 
-pub use cookie::Cookie;
+pub use self::{cookie::Cookie, name_list::NameList};
 
 /// Error emitted by the ssh protocol
 #[derive(Debug)]
