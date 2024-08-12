@@ -35,12 +35,13 @@ pub use key::{
 
 use encoding::Error as EncodingError;
 
+mod client_server;
 pub mod codec;
 pub mod constants;
 mod cookie;
 mod name_list;
 
-pub use self::{cookie::Cookie, name_list::NameList};
+pub use self::{client_server::ClientServer, cookie::Cookie, name_list::NameList};
 
 /// Error emitted by the ssh protocol
 #[derive(Debug)]
