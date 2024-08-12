@@ -41,8 +41,11 @@ pub mod constants;
 mod cookie;
 pub mod key_exchange;
 mod name_list;
+mod new_keys;
 
-pub use self::{client_server::ClientServer, cookie::Cookie, name_list::NameList};
+pub use self::{
+    client_server::ClientServer, cookie::Cookie, name_list::NameList, new_keys::NewKeys,
+};
 
 /// Error emitted by the ssh protocol
 #[derive(Debug)]
