@@ -11,6 +11,9 @@ use rand_core::{CryptoRngCore, SeedableRng};
 use tokio_util::bytes::{Buf, BufMut, BytesMut};
 use tokio_util::codec::{Decoder, Encoder};
 
+mod cipher;
+pub use self::cipher::{CipherCodec, Message};
+
 use crate::Error;
 
 /// Length of the packet length field
