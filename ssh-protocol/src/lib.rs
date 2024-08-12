@@ -27,3 +27,18 @@ pub use key::{
     self, certificate::Certificate, private::PrivateKey, public::PublicKey, Algorithm, Fingerprint,
     HashAlg, Kdf, KdfAlg, Signature,
 };
+
+use encoding::Error as EncodingError;
+
+/// Error emitted by the ssh protocol
+#[derive(Debug)]
+pub enum Error {
+    /// Encoding error
+    Encoding(EncodingError),
+}
+
+impl From<EncodingError> for Error {
+    fn from(e: EncodingError) -> Self {
+        Self::Encoding(e)
+    }
+}
