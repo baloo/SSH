@@ -16,22 +16,29 @@ edition = "2021"
 rust-version = "1.73"
 
 [dependencies]
-cipher = { package = "ssh-cipher", version = "=0.3.0-pre.1", default-features = false, path = "../ssh-cipher" }
+cipher = { package = "ssh-cipher", version = "=0.3.0-pre.1", default-features = false, path = "../ssh-cipher", features = ["aes-ctr"] }
 encoding = { package = "ssh-encoding", version = "=0.3.0-pre.1", default-features = false, path = "../ssh-encoding" }
 key = { package = "ssh-key", version = "=0.7.0-pre.0", default-features = false, path = "../ssh-key" }
-
 rand_core = "0.6.4"
 
 digest = "=0.11.0-pre.9"
+ecdsa = { version = "=0.17.0-pre.7", optional = true }
+elliptic-curve = { version = "=0.14.0-pre.6", optional = true, features = [ "alloc", "sec1" ] }
+hmac = "=0.13.0-pre.4"
+sha2 = "=0.11.0-pre.4"
 
 byteorder = { version = "1.4.3", optional = true }
 futures = { version = "0.3", optional = true }
 rand = { version = "0.8.5", optional = true }
 tokio = { version = "1", default-features = false, optional = true, features = [] }
 tokio-util = { version = "0.7", default-features = false, optional = true, features = ["codec"] }
+thiserror = "1.0.58"
+pretty-hex = "0.4.1"
 
-ecdsa = { version = "=0.17.0-pre.7", optional = true }
-elliptic-curve = { version = "=0.14.0-pre.6", optional = true, features = [ "alloc", "sec1" ] }
+[dev-dependencies]
+hex-literal = "0.4.1"
+p256 = { version = "=0.14.0-pre.1", features = ["ecdh"] }
+
 
 [features]
 default = ["std"]

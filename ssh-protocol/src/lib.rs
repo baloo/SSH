@@ -26,8 +26,10 @@ extern crate alloc;
 #[cfg(feature = "std")]
 extern crate std;
 
+use thiserror::Error;
+
 pub use cipher::{self, Cipher};
-pub use encoding::{self, Decode, Encode, Reader, Writer};
+pub use encoding::{self, CheckedSum, Decode, Encode, Reader, Writer};
 pub use key::{
     self, certificate::Certificate, private::PrivateKey, public::PublicKey, Algorithm,
     Error as KeyError, Fingerprint, HashAlg, Kdf, KdfAlg, Signature,

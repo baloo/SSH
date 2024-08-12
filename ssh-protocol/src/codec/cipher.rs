@@ -18,6 +18,8 @@ use tokio_util::codec::{Decoder, Encoder};
 use super::{Codec, PACKET_LEN};
 use crate::{constants, key_exchange::SessionKeys, ClientServer, Error};
 
+use pretty_hex::PrettyHex;
+
 struct MacState<D>
 where
     D: Digest,
