@@ -39,6 +39,7 @@ mod client_server;
 pub mod codec;
 pub mod constants;
 mod cookie;
+pub mod key_exchange;
 mod name_list;
 
 pub use self::{client_server::ClientServer, cookie::Cookie, name_list::NameList};

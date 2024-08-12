@@ -22,15 +22,19 @@ key = { package = "ssh-key", version = "=0.7.0-pre.0", default-features = false,
 
 rand_core = "0.6.4"
 
+digest = "=0.11.0-pre.9"
+
 byteorder = { version = "1.4.3", optional = true }
+futures = { version = "0.3", optional = true }
 rand = { version = "0.8.5", optional = true }
+tokio = { version = "1", default-features = false, optional = true, features = [] }
 tokio-util = { version = "0.7", default-features = false, optional = true, features = ["codec"] }
 
 
 [features]
 default = ["std"]
 alloc = ["encoding/alloc", "key/alloc"]
-async = ["byteorder", "tokio-util", "rand"]
+async = ["byteorder", "futures", "rand", "tokio", "tokio-util"]
 std = ["alloc", "encoding/std", "key/std"]
 
 [package.metadata.docs.rs]
