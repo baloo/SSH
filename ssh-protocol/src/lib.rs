@@ -42,9 +42,11 @@ mod cookie;
 pub mod key_exchange;
 mod name_list;
 mod new_keys;
+mod version_exchange;
 
 pub use self::{
     client_server::ClientServer, cookie::Cookie, name_list::NameList, new_keys::NewKeys,
+    version_exchange::VersionExchange,
 };
 
 /// Error emitted by the ssh protocol
