@@ -1033,6 +1033,8 @@ version = "0.1.0-pre.0"
 dependencies = [
  "byteorder",
  "digest",
+ "ecdsa",
+ "elliptic-curve",
  "futures",
  "rand",
  "rand_core",

@@ -29,8 +29,8 @@ extern crate std;
 pub use cipher::{self, Cipher};
 pub use encoding::{self, Decode, Encode, Reader, Writer};
 pub use key::{
-    self, certificate::Certificate, private::PrivateKey, public::PublicKey, Algorithm, Fingerprint,
-    HashAlg, Kdf, KdfAlg, Signature,
+    self, certificate::Certificate, private::PrivateKey, public::PublicKey, Algorithm,
+    Error as KeyError, Fingerprint, HashAlg, Kdf, KdfAlg, Signature,
 };
 
 use encoding::Error as EncodingError;
@@ -39,6 +39,7 @@ mod client_server;
 pub mod codec;
 pub mod constants;
 mod cookie;
+pub mod ecdh;
 pub mod key_exchange;
 mod name_list;
 mod new_keys;
@@ -56,9 +57,14 @@ pub enum Error {
     Encoding(EncodingError),
     /// Invalid command code found
     InvalidCommandCode { expected: u8, found: u8 },
+    /// Key error
+    Key(KeyError),
     /// Io error
     #[cfg(feature = "std")]
     Io(std::io::Error),
+    /// Elliptic curve error
+    #[cfg(feature = "ecdh")]
+    EllipticCurve(elliptic_curve::Error),
 }
 
 impl From<EncodingError> for Error {
@@ -67,10 +73,23 @@ impl From<EncodingError> for Error {
     }
 }
 
+impl From<KeyError> for Error {
+    fn from(e: KeyError) -> Self {
+        Self::Key(e)
+    }
+}
+
 #[cfg(feature = "std")]
 impl From<std::io::Error> for Error {
     fn from(e: std::io::Error) -> Self {
         Self::Io(e)
+    }
+}
+
+#[cfg(feature = "ecdh")]
+impl From<elliptic_curve::Error> for Error {
+    fn from(e: elliptic_curve::Error) -> Self {
+        Self::EllipticCurve(e)
     }
 }
 
@@ -89,7 +108,10 @@ mod error_std {
                         "invalid command code (found={found}, expected={expected})"
                     )
                 }
+                Self::Key(e) => e.fmt(f),
                 Self::Io(e) => e.fmt(f),
+                #[cfg(feature = "ecdh")]
+                Self::EllipticCurve(e) => e.fmt(f),
             }
         }
     }

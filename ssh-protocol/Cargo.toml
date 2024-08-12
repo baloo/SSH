@@ -30,11 +30,14 @@ rand = { version = "0.8.5", optional = true }
 tokio = { version = "1", default-features = false, optional = true, features = [] }
 tokio-util = { version = "0.7", default-features = false, optional = true, features = ["codec"] }
 
+ecdsa = { version = "=0.17.0-pre.7", optional = true }
+elliptic-curve = { version = "=0.14.0-pre.6", optional = true, features = [ "alloc", "sec1" ] }
 
 [features]
 default = ["std"]
 alloc = ["encoding/alloc", "key/alloc"]
 async = ["byteorder", "futures", "rand", "tokio", "tokio-util"]
+ecdh = ["ecdsa", "elliptic-curve", "key/ecdsa"]
 std = ["alloc", "encoding/std", "key/std"]
 
 [package.metadata.docs.rs]
