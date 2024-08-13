@@ -38,6 +38,8 @@ use encoding::Error as EncodingError;
 pub enum Error {
     /// Encoding error
     Encoding(EncodingError),
+    /// Invalid command code found
+    InvalidCommandCode { expected: u8, found: u8 },
 }
 
 impl From<EncodingError> for Error {
@@ -49,15 +51,36 @@ impl From<EncodingError> for Error {
 #[cfg(feature = "std")]
 mod error_std {
     use super::Error;
-    use std::{error, fmt};
+    use std::{error, fmt, format};
 
     impl fmt::Display for Error {
         fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
             match self {
                 Self::Encoding(e) => e.fmt(f),
+                Self::InvalidCommandCode { expected, found } => {
+                    write!(
+                        f,
+                        "invalid command code (found={found}, expected={expected})"
+                    )
+                }
             }
         }
     }
 
     impl error::Error for Error {}
+}
+
+#[inline]
+fn read_command_code(command_code_expected: u8, reader: &mut impl Reader) -> Result<(), Error> {
+    let mut command_code = [0u8; 1];
+    reader.read(&mut command_code[..])?;
+
+    if command_code[0] != command_code_expected {
+        Err(Error::InvalidCommandCode {
+            expected: command_code_expected,
+            found: command_code[0],
+        })
+    } else {
+        Ok(())
+    }
 }
