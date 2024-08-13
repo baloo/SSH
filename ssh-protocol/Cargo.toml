@@ -22,9 +22,15 @@ key = { package = "ssh-key", version = "=0.7.0-pre.0", default-features = false,
 
 rand_core = "0.6.4"
 
+byteorder = { version = "1.4.3", optional = true }
+rand = { version = "0.8.5", optional = true }
+tokio-util = { version = "0.7", default-features = false, optional = true, features = ["codec"] }
+
+
 [features]
 default = ["std"]
 alloc = ["encoding/alloc", "key/alloc"]
+async = ["byteorder", "tokio-util", "rand"]
 std = ["alloc", "encoding/std", "key/std"]
 
 [package.metadata.docs.rs]

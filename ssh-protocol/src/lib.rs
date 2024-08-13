@@ -35,6 +35,7 @@ pub use key::{
 
 use encoding::Error as EncodingError;
 
+pub mod codec;
 pub mod constants;
 mod cookie;
 mod name_list;
@@ -48,11 +49,21 @@ pub enum Error {
     Encoding(EncodingError),
     /// Invalid command code found
     InvalidCommandCode { expected: u8, found: u8 },
+    /// Io error
+    #[cfg(feature = "std")]
+    Io(std::io::Error),
 }
 
 impl From<EncodingError> for Error {
     fn from(e: EncodingError) -> Self {
         Self::Encoding(e)
+    }
+}
+
+#[cfg(feature = "std")]
+impl From<std::io::Error> for Error {
+    fn from(e: std::io::Error) -> Self {
+        Self::Io(e)
     }
 }
 
@@ -71,6 +82,7 @@ mod error_std {
                         "invalid command code (found={found}, expected={expected})"
                     )
                 }
+                Self::Io(e) => e.fmt(f),
             }
         }
     }
